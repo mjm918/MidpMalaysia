@@ -1,0 +1,40 @@
+/*HEADER FOOTER AND BODY FOR SIGN IN, SIGN UP*/
+.header-font{
+    margin-left: 50px;
+    text-shadow: #326eaf;
+    font-size: 30px;
+    text-shadow: 1px 1px #fff;
+}
+.headerProfile-font{
+    margin-left: 30px;
+    text-shadow: #326eaf;
+    font-size: 20px;
+}
+#header{
+    background-color: #161719;
+    color: white;
+}
+body{
+    background-color: #525252;
+}
+
+.centered-form .panel{
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: rgba(0, 0, 0, 0.3) 10px 10px 10px;
+}
+/*INVOICE*/
+.invoice-title h2, .invoice-title h3 {
+    display: inline-block;
+}
+
+.table > tbody > tr > .no-line {
+    border-top: none;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none;
+}
+
+.table > tbody > tr > .thick-line {
+    border-top: 2px solid;
+}
