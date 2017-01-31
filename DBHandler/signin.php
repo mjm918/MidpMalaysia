@@ -19,6 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(mysqli_num_rows($query) == 1){
             $row = $query->fetch_assoc();
             $status = $row['status_p'];
+            $_SESSION['email']= $email;
             if($status == "1"){
                 header('location:../home.php');
             }else{
