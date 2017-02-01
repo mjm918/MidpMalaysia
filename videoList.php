@@ -52,7 +52,7 @@ if(mysqli_num_rows($query) == 1){
                     },
                     callback: function (result) {
                         if(result==true){
-                            window.location.href='examPanel.php';
+                            window.location.href='mcqPanel.php';
                         }
                     }
                 });

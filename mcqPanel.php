@@ -6,13 +6,11 @@
  * Time: 15:16
  */
 require_once ('DBHandler/config.php');
-$query = mysqli_query($dbconfig,"select id from mcq order by RAND()");
-$res_array = array();
-
-while($row = mysqli_fetch_assoc($query)){
-    $res_array[] = $row;
+session_start();
+$email = $_SESSION['email'];
+if($email == ""){
+    header('location:index.php');
 }
-$json = json_encode($res_array);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
@@ -32,6 +30,7 @@ $json = json_encode($res_array);
         history.pushState(null, null, 'bingo-you-cant-go-back');
         window.addEventListener('popstate', function(event) {
             history.pushState(null, null, 'bingo-you-cant-go-back');
+            document.getElementById('hide').style.display = 'none'
         });
     </script>
 
@@ -41,11 +40,6 @@ $json = json_encode($res_array);
 <?php include ('headerProfile.php');?>
 <div class="container">
     <hr>
-
-    <script type="text/javascript" language="javascript">
-        var obj = <?php echo $json; ?>;
-        //alert(obj[0].id);
-    </script>
 </div>
 </body>
 <?php include ('footer.php');?>
