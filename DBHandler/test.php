@@ -22,14 +22,20 @@ if (mysqli_num_rows($retval) > 0) {
 
     while($row = mysqli_fetch_assoc($retval)) {
 
-        echo '<td>';
+       echo '<div style="text-align: center">';
+       echo '<b>'.$row['question'].'</b>';
+       echo '<form>
+       <input type="radio" name="portion_num" value="a" />'.$row['q_a'].'
 
-        echo '<tr>'. $row['id'] . '</tr><br>';
-        echo '<tr>'. $row['question'] . '</tr><br>';
-        echo '<tr>'. $row['q_a'] . '</tr><br>';
-        echo '<tr>'. $row['q_b'] . '</tr><br>';
-        echo '<tr>'. $row['q_c'] . '</tr><br>';
-        echo '<td>';
+        <br><input type="radio" name="portion_num" value="b" />'.$row['q_b'].'
+
+        <br><input type="radio" name="portion_num" value="c" /> '.$row['q_c'].'
+
+        <br><input type="radio" name="portion_num" value="d" /> '.$row['q_d'].'
+        
+        <br><input type="submit" name="submit" id="submit" value="Submit"/>
+     </form>';
+        echo '</div>';
     }
 }
 else {
@@ -52,17 +58,6 @@ for ($i=1; $i<=$total_pages; $i++) {
 
 echo "<li><a href='test.php?page=".($page+1)."' class='button'>NEXT</a></li>";
 echo "</ul>";
-//echo $pagLink . "</div>";
 mysqli_close($dbconfig);
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Document</title>
 
-</head>
-<body>
-
-</body>
-</html>
