@@ -61,34 +61,8 @@ mysqli_close($dbconfig);
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>Document</title>
 
-    <script type="text/javascript">
-        function startTimer(duration, display) {
-            var timer = duration, minutes, seconds;
-            setInterval(function () {
-                minutes = parseInt(timer / 60, 10)
-                seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    timer = duration;
-                }
-            }, 1000);
-        }
-
-        window.onload = function () {
-            var phpRes = <?php echo json_encode($total_records); ?>;
-            var minutes = 60 *phpRes,
-                display = document.querySelector('#time');
-            startTimer(minutes, display);
-        };
-    </script>
 </head>
 <body>
-<div class="service-container" data-service="<?php echo $total_records; ?>">
-<div>Exam finishes in <span id="time"></span> minutes!</div>
+
 </body>
 </html>

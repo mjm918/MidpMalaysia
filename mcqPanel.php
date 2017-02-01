@@ -11,6 +11,10 @@ $email = $_SESSION['email'];
 if($email == ""){
     header('location:index.php');
 }
+$sql = "SELECT COUNT(*) FROM mcq";
+$retval1 = mysqli_query($dbconfig, $sql);
+$row = mysqli_fetch_row($retval1);
+$total_records = $row[0];
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
@@ -40,6 +44,53 @@ if($email == ""){
 <?php include ('headerProfile.php');?>
 <div class="container">
     <hr>
+
+    <h3 style="color: dimgrey">Total <b><span style="
+    font-size: 40px;
+    color: #326eaf;"><?php echo $total_records;?></span></b> questions. Exam finishes in <b><span style="
+    color: crimson;
+    font-size: 40px;
+    text-shadow: 1px 1px grey;" id="time">--:--</span></b> minutes!</h3>
+
+    <script type="text/javascript">
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10)
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = duration;
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            var phpRes = <?php echo json_encode($total_records); ?>;
+            var minutes = 60 *0.5*phpRes,
+                display = document.querySelector('#time');
+            startTimer(minutes, display);
+        };
+        var res = <?php echo json_encode($total_records); ?>;
+        var t = (res*60*0.5)*1000;
+        setTimeout(function () {
+            window.location.href= 'http://www.google.com';
+        },t);
+    </script>
+
+    <hr>
+    <div class="row centered-form">
+        <div>
+            <div style="padding: 30px;height: 400px" class="panel panel-default">
+                <iframe style="width: 100%;height: 100%" src = "./DBHandler/test.php"/>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <?php include ('footer.php');?>
