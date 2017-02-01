@@ -19,6 +19,17 @@ if($email == ""){
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midp Test</title>
+
+    <script type="text/javascript">
+        var query = window.location.search.substring(1)
+
+        if(query.length) {
+            if(window.history != undefined && window.history.pushState != undefined) {
+                window.history.pushState({}, document.title, window.location.pathname);
+            }
+        }
+    </script>
+
 </head>
 <?php include "header.php";?>
 <body>

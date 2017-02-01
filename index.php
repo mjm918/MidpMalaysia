@@ -20,6 +20,7 @@ if($error_msg != ""){
     <!--For Mobile rendering-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midp Test</title>
+
 </head>
 <?php include "header.php";?>
 <body>

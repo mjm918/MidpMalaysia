@@ -23,6 +23,8 @@
                 <li class="active"><a href="#register">Register</a></li>
                 <li><a href="#payment">Complete payment</a></li>
                 <li><a href="#done">Done!</a></li>
+                <hr>
+                <a href="index.php" style="text-decoration: none"><input style="width: 100%" class="btn btn-warning" value="Login here!"></a>
             </ul>
         </nav>
     <div class="row centered-form">
@@ -57,7 +59,9 @@
                         <div class="form-group">
                             <input type="text" pattern=".{5,50}" required title="5 to 20 characters" id="in_school" name="in_school" class="form-control" required="required" placeholder="School">
                         </div>
-                        <input style="background-color: #326eaf" name="submit" type="submit" value="Register" class="btn btn-info btn-block">
+                        <div class="form-group">
+                            <input style="background-color: #326eaf;margin-bottom: 40px" name="submit" type="submit" value="Register" class="btn btn-info btn-block">
+                        </div>
                     </form>
                 </div>
             </div>

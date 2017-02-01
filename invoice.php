@@ -33,6 +33,15 @@ while ($row = mysqli_fetch_array($query)){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
 
     <script type="text/javascript">
+
+        var query = window.location.search.substring(1)
+
+        if(query.length) {
+            if(window.history != undefined && window.history.pushState != undefined) {
+                window.history.pushState({}, document.title, window.location.pathname);
+            }
+        }
+
         $(document).ready(function() {
 
             $("#pdf").click(function() {

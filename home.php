@@ -19,9 +19,10 @@
 
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Midp Test</title>
+
  </head>
  <?php include "headerProfile.php";?>
- <body>
+ <body style="background-color: floralwhite">
  <?php include "videoList.php";?>
  </body>
  <?php include "footer.php";?>
