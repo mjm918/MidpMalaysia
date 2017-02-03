@@ -26,10 +26,11 @@ if (strpos($_SERVER['REQUEST_URI'], 'mcqPanel') !== false) {
 
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav style="background-color: #161719" class="navbar navbar-inverse">
     <div class="container-fluid">
-        <div style="margin-top: 10px" id="header" class="navbar-header">
+        <div id="header" class="navbar-header">
             <div class="headerProfile-font">
+                <img src="assets/midp.png" width="40px" height="50px" alt="">
                     Midp Test Panel
             </div>
         </div>

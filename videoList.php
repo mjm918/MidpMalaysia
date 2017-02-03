@@ -78,8 +78,8 @@ if(mysqli_num_rows($query) == 1){
                         </div>
                     </div>
                     <div style="float: right;">
-                        <span style="font-size: 15px" class="label label-info">Total marks: 100</span>
-                        <span style="font-size: 15px" class="label label-info">Last exam: 20</span>
+                        <span style="font-size: 15px" class="label label-info">Passing score: 65</span>
+                        <span style="font-size: 15px" class="label label-danger">You got: 20</span>
                         <br><br><button type="button" class="btn btn-warning" style="float: right">Check history</button>
                     </div>
                 </div>
@@ -92,7 +92,6 @@ if(mysqli_num_rows($query) == 1){
         <li>Write something</li>
         <li>About the videos</li>
         <li>and instructions including exam.(Ex: time,how many bla bla)</li>
-<!--        <a href="examPanel.php" style="text-decoration: none"><input type="button" class="btn btn-primary" style="float: right" value="Take test"></a>-->
         <button id="btnTest" class="btn btn-primary" style="float: right">Take test</button>
     </ul>
 

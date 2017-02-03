@@ -11,6 +11,14 @@ $email = $_SESSION['email'];
 if($email == ""){
     header('location:index.php');
 }
+$query = mysqli_query($dbconfig,"select status_p from premium where email='$email'");
+$row_status = $query->fetch_assoc();
+$status = $row_status['status_p'];
+
+if($status != "1"){
+    header('location:index.php');
+}
+
 $sql = "SELECT COUNT(*) FROM mcq";
 $retval1 = mysqli_query($dbconfig, $sql);
 $row = mysqli_fetch_row($retval1);
