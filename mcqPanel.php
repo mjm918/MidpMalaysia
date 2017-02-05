@@ -23,6 +23,19 @@ $sql = "SELECT COUNT(*) FROM mcq";
 $retval1 = mysqli_query($dbconfig, $sql);
 $row = mysqli_fetch_row($retval1);
 $total_records = $row[0];
+
+
+$redirect = $_SESSION['done'];
+if($redirect = 1){
+    echo '<script>
+    var t = 15000;
+    var url = "DBHandler/theoryQuestion.php" ;
+        setTimeout(function () {
+            window.location = url;
+        },t);
+</script>';
+}
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
@@ -92,10 +105,13 @@ $total_records = $row[0];
     </script>
 
     <hr>
+
+    <p>Don't reload the page. Reloading page will cause lost data and will consider the exam as already taken.</p><br>
+
     <div class="row centered-form">
         <div>
             <div style="padding: 30px;height: 400px" class="panel panel-default">
-                <iframe style="width: 100%;height: 100%" src = "./DBHandler/test.php"/>
+                <iframe frameBorder="0" style="width: 100%;height: 100%" src = "DBHandler/mcqQuestions.php"/>
             </div>
         </div>
     </div>
