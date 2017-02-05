@@ -22,7 +22,7 @@
 
  </head>
  <?php include "headerProfile.php";?>
- <body style="background-color: floralwhite">
+ <body>
  <?php include "videoList.php";?>
  </body>
  <?php include "footer.php";?>

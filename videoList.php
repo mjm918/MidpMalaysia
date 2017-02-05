@@ -16,6 +16,18 @@ if(mysqli_num_rows($query) == 1){
     $state = $row['state'];
     $mobile = $row['mobile'];
 }
+
+$display = "";
+$disable = "";
+$sql = mysqli_query($dbconfig,"SELECT * FROM record where email = '$email'");
+if(mysqli_num_rows($sql) >= 1){
+    $display = "";
+    $disable = "disabled";
+    $r = $sql->fetch_assoc();
+    $date = $r['date'];
+}else{
+    $display = "display:none;";
+}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
@@ -77,8 +89,9 @@ if(mysqli_num_rows($query) == 1){
                             </div>
                         </div>
                     </div>
-                    <div style="float: right;">
-                        <span style="font-size: 15px" class="label label-info">Passing score: 65</span>
+                    <div style="float: right;<?php echo $display?>">
+                        <span style="font-size: 15px" class="label label-info">Exam taken on : <?php echo $date;?></span>
+                        <span style="font-size: 15px" class="label label-success">Passing score: 65</span>
                         <span style="font-size: 15px" class="label label-danger">You got: 20</span>
                         <br><br><button type="button" class="btn btn-warning" style="float: right">Check history</button>
                     </div>
@@ -92,7 +105,7 @@ if(mysqli_num_rows($query) == 1){
         <li>Write something</li>
         <li>About the videos</li>
         <li>and instructions including exam.(Ex: time,how many bla bla)</li>
-        <button id="btnTest" class="btn btn-primary" style="float: right">Take test</button>
+        <button <?php echo $disable;?> id="btnTest" name="btnDisable" class="btn btn-primary" style="float: right">Take test</button>
     </ul>
 
     <hr>

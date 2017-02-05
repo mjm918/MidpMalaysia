@@ -9,6 +9,8 @@ if (strpos($_SERVER['REQUEST_URI'], 'mcqPanel') !== false) {
     $hide = "none";
 }else if(strpos($_SERVER['REQUEST_URI'], 'home') !== false){
     $hide = "none";
+}else if(strpos($_SERVER['REQUEST_URI'], 'theory') !== false){
+    $hide = "none";
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -30,7 +32,7 @@ if (strpos($_SERVER['REQUEST_URI'], 'mcqPanel') !== false) {
     <div class="container-fluid">
         <div id="header" class="navbar-header">
             <div class="headerProfile-font">
-                <img src="assets/midp.png" width="40px" height="50px" alt="">
+                <img src="./assets/midp.png" width="40px" height="50px" alt="">
                     Midp Test Panel
             </div>
         </div>

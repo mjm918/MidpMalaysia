@@ -6,6 +6,7 @@
  * Time: 15:16
  */
 require_once ('DBHandler/config.php');
+//error_reporting(0);
 session_start();
 $email = $_SESSION['email'];
 if($email == ""){
@@ -19,22 +20,13 @@ if($status != "1"){
     header('location:index.php');
 }
 
+$date = date("Y-m-d");
+$query = mysqli_query($dbconfig,"INSERT INTO record (id,email,date,marks) VALUES (NULL,'$email','$date',NULL)");
+
 $sql = "SELECT COUNT(*) FROM mcq";
 $retval1 = mysqli_query($dbconfig, $sql);
 $row = mysqli_fetch_row($retval1);
 $total_records = $row[0];
-
-
-$redirect = $_SESSION['done'];
-if($redirect = 1){
-    echo '<script>
-    var t = 15000;
-    var url = "DBHandler/theoryQuestion.php" ;
-        setTimeout(function () {
-            window.location = url;
-        },t);
-</script>';
-}
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -68,7 +60,7 @@ if($redirect = 1){
 
     <h3 style="color: dimgrey">Total <b><span style="
     font-size: 40px;
-    color: #326eaf;"><?php echo $total_records;?></span></b> questions. Exam finishes in <b><span style="
+    color: #326eaf;"><?php echo $total_records;?></span></b> questions. MCQ section finishes in <b><span style="
     color: crimson;
     font-size: 40px;
     text-shadow: 1px 1px grey;" id="time">--:--</span></b> minutes!</h3>
@@ -100,7 +92,7 @@ if($redirect = 1){
         var res = <?php echo json_encode($total_records); ?>;
         var t = (res*60*0.5)*1000;
         setTimeout(function () {
-            window.location.href= 'http://www.google.com';
+            window.location= 'theoryQuestion.php';
         },t);
     </script>
 
@@ -110,7 +102,7 @@ if($redirect = 1){
 
     <div class="row centered-form">
         <div>
-            <div style="padding: 30px;height: 400px" class="panel panel-default">
+            <div style="padding: 30px;height: 500px" class="panel panel-default">
                 <iframe frameBorder="0" style="width: 100%;height: 100%" src = "DBHandler/mcqQuestions.php"/>
             </div>
         </div>

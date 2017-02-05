@@ -8,6 +8,7 @@ $none = "";
 
 $msg = "";
 $email = $_SESSION['email'];
+
 if(isset($_POST["submit"])){
     $ans = $_POST['rb_ans'];
     $question = $_POST['question'];
@@ -47,11 +48,11 @@ if (mysqli_num_rows($retval) > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">';
 
 
-       // echo '<script>$("#ww").ajaxForm({url: \'mcqQuestions.php\', type: \'post\'})</script>';
+        // echo '<script>$("#ww").ajaxForm({url: \'mcqQuestions.php\', type: \'post\'})</script>';
 
-
+        echo '<h2 style="color: #326eaf">Question</h2>';
         echo '<div style="text-align: center;margin-top: 50px">';
-        echo '<h2 style="color: #326eaf">'.$row['question'].'</h2>';
+        echo '<h3 style="color: dimgrey">'.$row['question'].'</h3>';
         echo '<form name="ww" id="ww" class="ww" action="mcqQuestions.php" method="POST">
 
         <input style="color: dimgray;display: none" name="question" id="question" value="' .$row['question'].'"/>
@@ -73,7 +74,6 @@ if (mysqli_num_rows($retval) > 0) {
 else {
     echo "<h1 style='color: #326eaf;text-align: center;margin-top: 50px'>Answers successfully submitted.</h1>";
     echo "<p style='color: dimgrey;text-align: center;margin-top: 50px'> Redirecting to next part(Theory questions) [Do not reload this page. This page will auto redirect in <b><span id='time'></span></b> seconds]</p>";
-    $_SESSION['done'] = 1;
 
     echo '<script type="text/javascript">
         function startTimer(duration, display) {
