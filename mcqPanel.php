@@ -6,12 +6,18 @@
  * Time: 15:16
  */
 require_once ('DBHandler/config.php');
-//error_reporting(0);
+error_reporting(0);
 session_start();
 $email = $_SESSION['email'];
 if($email == ""){
     header('location:index.php');
 }
+
+$check_record = mysqli_query($dbconfig,"select * from record where email = '.$email.'");
+if(mysqli_num_rows($check_record)>1){
+    header('location:index.php');
+}
+
 $query = mysqli_query($dbconfig,"select status_p from premium where email='$email'");
 $row_status = $query->fetch_assoc();
 $status = $row_status['status_p'];
@@ -20,14 +26,17 @@ if($status != "1"){
     header('location:index.php');
 }
 
-$date = date("Y-m-d");
-$query = mysqli_query($dbconfig,"INSERT INTO record (id,email,date,marks) VALUES (NULL,'$email','$date',NULL)");
+if($email != ""){
+    $date = date("Y-m-d");
+    $query = mysqli_query($dbconfig,"INSERT INTO record (id,email,date,marks) VALUES (NULL,'$email','$date',NULL)");
+}
 
 $sql = "SELECT COUNT(*) FROM mcq";
 $retval1 = mysqli_query($dbconfig, $sql);
 $row = mysqli_fetch_row($retval1);
 $total_records = $row[0];
 
+echo "<script>localStorage.clear();</script>";
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
@@ -49,11 +58,20 @@ $total_records = $row[0];
             history.pushState(null, null, 'bingo-you-cant-go-back');
             document.getElementById('hide').style.display = 'none'
         });
+        window.setInterval(function() {
+            if(localStorage.getItem("finish") == 1) {
+                var t = 13*1000;
+                setTimeout(function () {
+                    window.location= 'theoryQuestion.php';
+                },t);
+            }
+        },30);
     </script>
 
     <title>Midp Test</title>
 </head>
 <body>
+
 <?php include ('headerProfile.php');?>
 <div class="container">
     <hr>
@@ -63,7 +81,7 @@ $total_records = $row[0];
     color: #326eaf;"><?php echo $total_records;?></span></b> questions. MCQ section finishes in <b><span style="
     color: crimson;
     font-size: 40px;
-    text-shadow: 1px 1px grey;" id="time">--:--</span></b> minutes!</h3>
+    text-shadow: 1px 1px grey;" id="MCQtime">--:--</span></b> minutes!</h3>
 
     <script type="text/javascript">
         function startTimer(duration, display) {
@@ -86,7 +104,7 @@ $total_records = $row[0];
         window.onload = function () {
             var phpRes = <?php echo json_encode($total_records); ?>;
             var minutes = 60 *0.5*phpRes,
-                display = document.querySelector('#time');
+                display = document.querySelector('#MCQtime');
             startTimer(minutes, display);
         };
         var res = <?php echo json_encode($total_records); ?>;
@@ -102,7 +120,7 @@ $total_records = $row[0];
 
     <div class="row centered-form">
         <div>
-            <div style="padding: 30px;height: 500px" class="panel panel-default">
+            <div style="padding: 30px;height: 400px" class="panel panel-default">
                 <iframe frameBorder="0" style="width: 100%;height: 100%" src = "DBHandler/mcqQuestions.php"/>
             </div>
         </div>

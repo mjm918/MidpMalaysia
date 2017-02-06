@@ -6,20 +6,21 @@ session_start();
 $limit = 1;
 $none = "";
 
-$msg = "";
 $email = $_SESSION['email'];
 
 if(isset($_POST["submit"])){
     $ans = $_POST['rb_ans'];
     $question = $_POST['question'];
-
-    $query = mysqli_query($dbconfig, "INSERT INTO mcq_answers (id,email,question,answer,validate,correct,marks) VALUES (NULL,'$email','$question','$ans',0,NULL,NULL)");
-
-    if($query){
-        $_SESSION['next'] = $_SESSION['next']+1;
-        $msg = "success";
+    if($ans == ""){
+        echo "<p style='color:red'>Do not leave any section blank</p>";
     }else{
-        echo 'FAIL';
+        $query = mysqli_query($dbconfig, "INSERT INTO mcq_answers (id,email,question,answer,validate,correct,marks) VALUES (NULL,'$email','$question','$ans',0,NULL,NULL)");
+
+        if($query){
+            $_SESSION['next'] = $_SESSION['next']+1;
+        }else{
+            echo 'FAIL';
+        }
     }
 }
 
@@ -36,7 +37,7 @@ if (mysqli_num_rows($retval) > 0) {
 
     while($row = mysqli_fetch_assoc($retval)) {
 
-        echo '<link rel="stylesheet" href="css/style.css">
+        echo '<link rel="stylesheet" href="../css/style.css">
     <!-- required includes -->
     <script src="http://bootboxjs.com/bootbox.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -47,11 +48,7 @@ if (mysqli_num_rows($retval) > 0) {
     <!--For Mobile rendering-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">';
 
-
-        // echo '<script>$("#ww").ajaxForm({url: \'mcqQuestions.php\', type: \'post\'})</script>';
-
-        echo '<h2 style="color: #326eaf">Question</h2>';
-        echo '<div style="text-align: center;margin-top: 50px">';
+        echo '<div style="text-align: left;margin-top: 50px;margin-left: 50px">';
         echo '<h3 style="color: dimgrey">'.$row['question'].'</h3>';
         echo '<form name="ww" id="ww" class="ww" action="mcqQuestions.php" method="POST">
 
@@ -72,6 +69,7 @@ if (mysqli_num_rows($retval) > 0) {
     }
 }
 else {
+    echo "<script>localStorage.setItem('finish',1)</script>";
     echo "<h1 style='color: #326eaf;text-align: center;margin-top: 50px'>Answers successfully submitted.</h1>";
     echo "<p style='color: dimgrey;text-align: center;margin-top: 50px'> Redirecting to next part(Theory questions) [Do not reload this page. This page will auto redirect in <b><span id='time'></span></b> seconds]</p>";
 

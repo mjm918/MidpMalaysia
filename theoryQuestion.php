@@ -10,15 +10,35 @@ include "./DBHandler/config.php";
 session_start();
 
 $email = $_SESSION['email'];
+$msg = "";
+if($email == ""){
+    header('location:index.php');
+}
+
+$query = mysqli_query($dbconfig,"select status_p from premium where email='$email'");
+$row_status = $query->fetch_assoc();
+$status = $row_status['status_p'];
+
+if($status != "1"){
+    header('location:index.php');
+}
+$check_record = mysqli_query($dbconfig,"select * from record where email = '.$email.'");
+if(mysqli_num_rows($check_record)>1){
+    header('location:index.php');
+}
 
 if(isset($_POST["submit"])){
     $question = $_POST['ques'];
     $ans = htmlspecialchars($_POST['ans']);
 
-    $sql = mysqli_query($dbconfig,"insert into theoryanswer (id,email,question,answer) VALUES (NULL,'$email','$question','$ans')");
+    if($ans == ""){
+        $msg = "Do not leave your answer blank";
+    }else{
+        $sql = mysqli_query($dbconfig,"insert into theoryanswer (id,email,question,answer) VALUES (NULL,'$email','$question','$ans')");
 
-    if($sql){
-        $_SESSION['ques'] = $_SESSION['ques']+1;
+        if($sql){
+            $_SESSION['ques'] = $_SESSION['ques']+1;
+        }
     }
 }
 ?>
@@ -56,6 +76,7 @@ if(isset($_POST["submit"])){
             echo '<br><input style="float:right" type="submit" class="btn btn-danger" name="submit" id="submit" value="Submit"/>
     </form>';
         }
+        echo '<p style="color:red">'.$msg.'</p>';
     }else{
         echo "<h1 style='color: #326eaf;text-align: center;margin-top: 50px'>Answers successfully submitted</h1>";
         echo "<h2 style='color: coral;text-align: center;margin-top: 50px'>Thank you for your interest</h2>";

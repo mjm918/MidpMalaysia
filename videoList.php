@@ -25,6 +25,7 @@ if(mysqli_num_rows($sql) >= 1){
     $disable = "disabled";
     $r = $sql->fetch_assoc();
     $date = $r['date'];
+    $score = $r['marks'];
 }else{
     $display = "display:none;";
 }
@@ -69,6 +70,26 @@ if(mysqli_num_rows($sql) >= 1){
                     }
                 });
             });
+            $('#btnRetake').click(function() {
+                bootbox.confirm({
+                    title: "Confirmation!!",
+                    message: "To retake this exam you have to repay." +
+                    " Confirming this, you will be logged out and can't access to this page until you pay for next exam.",
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> Cancel'
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> Ok'
+                        }
+                    },
+                    callback: function (result) {
+                        if(result==true){
+                            window.location.href='reset.php';
+                        }
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -92,8 +113,9 @@ if(mysqli_num_rows($sql) >= 1){
                     <div style="float: right;<?php echo $display?>">
                         <span style="font-size: 15px" class="label label-info">Exam taken on : <?php echo $date;?></span>
                         <span style="font-size: 15px" class="label label-success">Passing score: 65</span>
-                        <span style="font-size: 15px" class="label label-danger">You got: 20</span>
-                        <br><br><button type="button" class="btn btn-warning" style="float: right">Check history</button>
+                        <span style="font-size: 15px" class="label label-danger">Score achieved: <?php if($score!= ""){echo $score;}else{echo "Waiting for admin";}?></span>
+                        <br><br><button type="button" class="btn btn-default" style="float: right">Check history</button>
+                        <br><br><button id = "btnRetake" type="button" class="btn btn-warning" style="float: right">Retake <exam></exam></button>
                     </div>
                 </div>
                 </p>

@@ -18,9 +18,9 @@ if($error_msg != ""){
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <!--For Mobile rendering-->
+    <script src="http://bootboxjs.com/bootbox.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midp Test</title>
-
 </head>
 <?php include "header.php";?>
 <body>
