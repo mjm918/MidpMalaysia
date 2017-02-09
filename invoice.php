@@ -136,7 +136,7 @@ while ($row = mysqli_fetch_array($query)){
                             <!-- foreach ($order->lineItems as $line) or some such thing here -->
                             <tr>
                                 <td>Test fee</td>
-                                <td class="text-right">MYR 20.00 (Twenty ringgit only)</td>
+                                <td class="text-right">MYR 122.00 (One Hundred and Twenty Two ringgit only)</td>
                             </tr>
                             </tbody>
                         </table>

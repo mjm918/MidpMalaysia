@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: mohammad
+ * User: mohammad 
  * Date: 27/01/17
  * Time: 5:42 PM if($_SESSION['sid']==session_id())
  */

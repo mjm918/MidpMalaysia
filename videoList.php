@@ -25,10 +25,25 @@ if(mysqli_num_rows($sql) >= 1){
     $disable = "disabled";
     $r = $sql->fetch_assoc();
     $date = $r['date'];
-    $score = $r['marks'];
+    $score = $r['mcq'];
 }else{
     $display = "display:none;";
 }
+$policy = mysqli_query($dbconfig,"select * from policy where name='pass'");
+$p = $policy->fetch_assoc();
+$passScore = $p['description'];
+$home = mysqli_query($dbconfig,"select * from policy where name = 'home'");
+$h = $home->fetch_assoc();
+$detail = $h['description'];
+$exam = mysqli_query($dbconfig,"select* from policy where name='exam'");
+$e = $exam->fetch_assoc();
+$rule = $e['description'];
+$retake = mysqli_query($dbconfig,"select * from policy where name='retake'");
+$r = $retake->fetch_assoc();
+$rest = $r['description'];
+$fullmarks = mysqli_query($dbconfig,"select * from policy where name='fullmarks'");
+$f = $fullmarks->fetch_assoc();
+$fm = $f['description'];
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
@@ -54,7 +69,7 @@ if(mysqli_num_rows($sql) >= 1){
             $('#btnTest').click(function() {
                 bootbox.confirm({
                     title: "Confirmation!!",
-                    message: "Now you are proceeding to the exam panel. It can't be undone",
+                    message: "<?php echo $rule;?>",
                     buttons: {
                         cancel: {
                             label: '<i class="fa fa-times"></i> Cancel'
@@ -73,8 +88,7 @@ if(mysqli_num_rows($sql) >= 1){
             $('#btnRetake').click(function() {
                 bootbox.confirm({
                     title: "Confirmation!!",
-                    message: "To retake this exam you have to repay." +
-                    " Confirming this, you will be logged out and can't access to this page until you pay for next exam.",
+                    message: "<?php echo $rest;?>",
                     buttons: {
                         cancel: {
                             label: '<i class="fa fa-times"></i> Cancel'
@@ -99,7 +113,7 @@ if(mysqli_num_rows($sql) >= 1){
         <div style="width: 100%;">
             <div style="padding: 30px" class="panel panel-default">
                 <p>
-                <h1>Welcome</h1><h3 style="color: coral;"><?php echo $name;?></h3>
+                <strong><h1 style="color: #326eaf">Welcome</h1></strong><h3 style="color: coral;"><?php echo $name;?></h3>
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="media">
@@ -112,7 +126,7 @@ if(mysqli_num_rows($sql) >= 1){
                     </div>
                     <div style="float: right;<?php echo $display?>">
                         <span style="font-size: 15px" class="label label-info">Exam taken on : <?php echo $date;?></span>
-                        <span style="font-size: 15px" class="label label-success">Passing score: 65</span>
+                        <span style="font-size: 15px" class="label label-success">Passing score: <?php echo $passScore;?>/<?php echo $fm;?></span>
                         <span style="font-size: 15px" class="label label-danger">Score achieved: <?php if($score!= ""){echo $score;}else{echo "Waiting for admin";}?></span>
                         <br><br><button type="button" class="btn btn-default" style="float: right">Check history</button>
                         <br><br><button id = "btnRetake" type="button" class="btn btn-warning" style="float: right">Retake <exam></exam></button>
@@ -123,15 +137,13 @@ if(mysqli_num_rows($sql) >= 1){
         </div>
     </div>
     <hr>
-    <ul>
-        <li>Write something</li>
-        <li>About the videos</li>
-        <li>and instructions including exam.(Ex: time,how many bla bla)</li>
+    <ul style="text-align: justify">
+        <li style="color: #326eaf"><?php echo $detail;?></li>
         <button <?php echo $disable;?> id="btnTest" name="btnDisable" class="btn btn-primary" style="float: right">Take test</button>
     </ul>
 
     <hr>
-    <ul class="list-unstyled video-list-thumbs row">
+    <ul style="margin-bottom: 100px" class="list-unstyled video-list-thumbs row">
         <?php
         echo '<li style="margin: 20px" class="col-lg-3 col-sm-6 col-xs-6">
             <video id="my-video" class="video-js" controls preload="auto" width="300" height="200"

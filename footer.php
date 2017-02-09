@@ -9,7 +9,7 @@
 <div style="background-color:#326eaf" class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
         <p class="navbar-text pull-left">
-            <a style="color: aliceblue" href="http://www.facebook.com/iamshakil" target="_blank" >
+            <a style="color: aliceblue" href="http://www.midp.edu.my/web/" target="_blank" >
                 © 2014 Malaysian Institute for Debate and Public Speaking. All Rights Reserved.
             </a>
         </p>

@@ -5,10 +5,10 @@
  * Date: 28/01/2017
  * Time: 20:05
  */
-//$email = $_SESSION['email'];
-//if ($email == ""){
-//    header('location:index.php');
-//}
+$email = $_SESSION['email'];
+if ($email == ""){
+    header('location:index.php');
+}
 ?>
  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
  <html lang="en">
