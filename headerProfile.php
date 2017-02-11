@@ -5,6 +5,7 @@
  * Date: 29/01/2017
  * Time: 11:07
  */
+error_reporting(0);
 if (strpos($_SERVER['REQUEST_URI'], 'mcqPanel') !== false) {
     $hide = "none";
 }else if(strpos($_SERVER['REQUEST_URI'], 'home') !== false){

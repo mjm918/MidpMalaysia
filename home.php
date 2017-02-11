@@ -5,6 +5,8 @@
  * Date: 28/01/2017
  * Time: 20:05
  */
+session_start();
+$msg = "";
 $email = $_SESSION['email'];
 if ($email == ""){
     header('location:index.php');

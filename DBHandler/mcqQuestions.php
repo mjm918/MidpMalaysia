@@ -18,6 +18,30 @@ if(isset($_POST["submit"])){
 
         if($query){
             $_SESSION['next'] = $_SESSION['next']+1;
+            $email = $_POST['email'];
+
+            $wrong = array();
+            $correct = array();
+
+            $new = $_SESSION['email'];
+
+            $query = mysqli_query($dbconfig,"select * from mcq_answers where email='$new'");
+            while ($row=mysqli_fetch_array($query)){
+                $ques = $row['question'];
+                $ans = $row['answer'];
+                $sql = mysqli_query($dbconfig,"select * from mcq where question='$ques' and ans='$ans'");
+                if(mysqli_num_rows($sql) == 0){
+                    $getCorrect = mysqli_query($dbconfig,"select ans from mcq where question='$ques'");
+                    $res = $getCorrect->fetch_assoc();
+                    $newAns = $res['ans'];
+                    $wr_sql = mysqli_query($dbconfig,"update mcq_answers set correct='$newAns', validate='1', marks='0' where email='$new' and answer='$ans' and question='$ques'");
+                    array_push($wrong,$ques);
+                }else{
+                    $cr_sql =  mysqli_query($dbconfig,"update mcq_answers set validate='1', marks='2' where email='$new' and answer='$ans' and question='$ques'");
+                    array_push($correct,$ques);
+                }
+            }
+            //header('location:../viewUser.php?email='.$email);
         }else{
             echo 'FAIL';
         }

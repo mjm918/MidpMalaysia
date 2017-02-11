@@ -43,6 +43,8 @@ if(isset($_POST["submit"])){
 
         if($query){
             header('location:../payment.php?email='.$email);
+        }else{
+            echo 'Try again';
         }
     }catch (mysqli_sql_exception $exception){
         throw $exception;

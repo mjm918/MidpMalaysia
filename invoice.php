@@ -1,22 +1,6 @@
 <?php
 include ('./DBHandler/config.php');
 session_start();
-$email = $_SESSION['email'];
-
-$query = mysqli_query($dbconfig,"select * from premium where email='$email'");
-
-while ($row = mysqli_fetch_array($query)){
-    $name = $row['fullname'];
-    $ic = $row['ic'];
-    $mobile  = $row['mobile'];
-    $state = $row['state'];
-    $school  = $row['school'];
-    $status  = $row['status_p'];
-
-    if($status == "1"){
-        $premium = "PREMIUM";
-    }
-}
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -79,31 +63,45 @@ while ($row = mysqli_fetch_array($query)){
     </script>
 
 </head>
-<?php include "header.php";?>
+<?php include "headerProfile.php";?>
 <body>
 <div id="printPdf" class="container">
     <div class="row">
         <div class="col-xs-12">
             <div class="invoice-title">
-                <h2>Invoice</h2><h3 class="pull-right">Midp Test</h3>
+                <h2 style="color: #326eaf">Invoice</h2><h3 style="color: #326eaf" class="pull-right">Midp Test</h3>
             </div>
             <hr>
             <div class="row">
                 <div class="col-xs-6">
                     <address>
                         <strong>Billed To:</strong><br>
-                        <?php echo $name; ?><br>
-                        <?php echo $ic; ?><br>
-                        <?php echo $state; ?><br>
-                        <?php echo $mobile; ?>
+                        <?php
+                        $email = $_SESSION['email'];
+                        $query = mysqli_query($dbconfig,"select * from premium where email='$email'");
+                        while ($row = mysqli_fetch_array($query)){
+                            $name = $row['fullname'];
+                            $ic = $row['ic'];
+                            $mobile  = $row['mobile'];
+                            $state = $row['state'];
+                            $school  = $row['school'];
+                            $status  = $row['status_p'];
+
+                            if($status == "1"){
+                                $premium = "PREMIUM";
+                            }
+                            echo '<div style="color: #326eaf"><h4>'.$name.'</h4>
+                        <h4>'.$ic.'</h4>
+                        <h4>'.$mobile.'</h4>
+                        <h4>'.$school.'</h4></div>';
+                        }
+                        ?>
                     </address>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6">
                     <address>
-                        <strong>Payment Method:</strong><br>
-                        Card Payment<br>
                         <?php echo $email; ?>
                     </address>
                 </div>

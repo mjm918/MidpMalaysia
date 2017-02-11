@@ -7,11 +7,14 @@
  */
 include ('DBHandler/config.php');
 include ('init.php');
-
+session_start();
 $email = $_GET['email'];
+
 if($email == ""){
     header('location:index.php');
 }
+$_SESSION['email'] = $email;
+
 $query = mysqli_query($dbconfig,"select * from policy where name = 'policy'");
 if(mysqli_num_rows($query)>0){
     $row = $query->fetch_assoc();
@@ -19,6 +22,7 @@ if(mysqli_num_rows($query)>0){
 }
 //paypal
 if(isset($_POST['submit'])){
+
     $payer = new \PayPal\Api\Payer();
     $details = new \PayPal\Api\Details();
     $amount = new \PayPal\Api\Amount();
@@ -38,16 +42,18 @@ if(isset($_POST['submit'])){
     $payment->setIntent('sale')
         ->setPayer($payer)
         ->setTransactions([$trans]);
-    $redirect->setReturnUrl('http://175.138.78.105/midp/paymentToken.php?approve=1')
-        ->setCancelUrl('http://175.138.78.105/midp/paymentToken.php?approve=0');
+    $redirect->setReturnUrl('http://175.138.78.105/midp/paymentToken.php?approve=yes')
+        ->setCancelUrl('http://175.138.78.105/midp/paymentToken.php?approve=no');
     $payment->setRedirectUrls($redirect);
 
     try{
+        $new = $_SESSION['email'];
         $payment->create($api);
         $pid = $payment->getId();
-        $hash = md5($payment->getId());
+        $hash = md5($pid);
         $_SESSION['hash'] = $hash;
-        $update = mysqli_query($dbconfig,"update premium set pid='$pid',hash='$hash' where email = 'md.julfikar.mahmud@gmail.com' ");
+        $_SESSION['pid'] = $pid;
+        //$update = mysqli_query($dbconfig,"update premium set pid='$pid',hash='$hash' where email = '$new' ");
     }catch(\PayPal\Exception\PayPalConnectionException $e){
         echo 'ERROR---->\n';
         echo $e;

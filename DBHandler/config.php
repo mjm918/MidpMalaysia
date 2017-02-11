@@ -5,6 +5,7 @@
  * Date: 27/01/17
  * Time: 7:15 PM
  */
+error_reporting(0);
 $host = 'localhost';
 $username = 'root';
 $password = '';

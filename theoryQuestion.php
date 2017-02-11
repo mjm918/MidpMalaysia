@@ -34,7 +34,7 @@ if(isset($_POST["submit"])){
     if($ans == ""){
         $msg = "Do not leave your answer blank";
     }else{
-        $sql = mysqli_query($dbconfig,"insert into theoryanswer (id,email,question,answer) VALUES (NULL,'$email','$question','$ans')");
+        $sql = mysqli_query($dbconfig,"insert into theoryanswer (id,email,question,answer,comment,marks,validate) VALUES (NULL,'$email','$question','$ans',NULL,NULL,'0')");
 
         if($sql){
             $_SESSION['ques'] = $_SESSION['ques']+1;

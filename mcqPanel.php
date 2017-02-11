@@ -28,7 +28,7 @@ if($status != "1"){
 
 if($email != ""){
     $date = date("Y-m-d");
-    $query = mysqli_query($dbconfig,"INSERT INTO record (id,email,date,marks) VALUES (NULL,'$email','$date',NULL)");
+    $query = mysqli_query($dbconfig,"INSERT INTO record (id,email,date,mcq,theory,validate) VALUES (NULL,'$email','$date',NULL,NULL,0)");
 }
 
 $sql = "SELECT COUNT(*) FROM mcq";

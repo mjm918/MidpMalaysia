@@ -33,7 +33,7 @@
                         </div>
                         <input style="background-color: #326eaf" name="submit" type="submit" value="Login" class="btn btn-info btn-block">
                         <hr>
-                        <a style="text-decoration:none" href="signup.php"><input style="background-color: coral;border-color:coral" name="goReg" value="Not registered yet ? Register here" class="btn btn-info btn-block"></a>
+                        <a style="text-decoration:none" href="signup.php"><input type="button" style="background-color: coral;border-color:coral" name="goReg" value="Not registered yet ? Register here" class="btn btn-info btn-block"></a>
                     </form>
                 </div>
             </div>
