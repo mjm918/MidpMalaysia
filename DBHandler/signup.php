@@ -44,7 +44,8 @@ if(isset($_POST["submit"])){
         if($query){
             header('location:../payment.php?email='.$email);
         }else{
-            echo 'Try again';
+            $error_msg = "Something went wrong. Check email and password";
+            header('location:../index.php?error='.$error_msg);
         }
     }catch (mysqli_sql_exception $exception){
         throw $exception;

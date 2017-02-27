@@ -50,7 +50,7 @@ if($grade_marks>=10 && $grade_marks<=19){
 if($grade_marks>=0 && $grade_marks<=9){
     $grade = "F";
 }
-
+if($marks == 0 && $theory == 0){$grade = "NULL";}
 $grade_query = mysqli_query($dbconfig,"update record set grade='$grade' WHERE email = '$email'");
 
 if($date==""){

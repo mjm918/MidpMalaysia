@@ -24,7 +24,7 @@
                 <li><a href="#payment">Complete payment</a></li>
                 <li><a href="#done">Done!</a></li>
                 <hr>
-                <a href="index.php" style="text-decoration: none"><input style="width: 100%" class="btn btn-warning" value="Login here!"></a>
+                <a href="index.php" style="text-decoration: none"><input type="button" style="background-color: coral;width: 100%" class="btn btn-warning" value="Login here!"></a>
             </ul>
         </nav>
     <div class="row centered-form">

@@ -6,63 +6,48 @@
  * Time: 10:04 AM
  */
 include ('DBHandler/config.php');
-include ('init.php');
 session_start();
 $email = $_GET['email'];
-
-if($email == ""){
-    header('location:index.php');
-}
+//if($email == ""){
+//    header('location:index.php');
+//}
 $_SESSION['email'] = $email;
+
+$validate = mysqli_query($dbconfig,"select * from bank where email = '$email'");
+$v = $validate->fetch_assoc();
+$confirm = $v['validate'];
+
+if($confirm == "0"){
+    header('location:request.php?email='.$email);
+}
 
 $query = mysqli_query($dbconfig,"select * from policy where name = 'policy'");
 if(mysqli_num_rows($query)>0){
     $row = $query->fetch_assoc();
     $policy = $row['description'];
 }
-//paypal
+$button = "Check";
+$check_re = "";
 if(isset($_POST['submit'])){
+    $n = $_POST['email'];
+    $name = $_POST['bank_name'];
+    $receipt = $_POST['bank_receipt'];
 
-    $payer = new \PayPal\Api\Payer();
-    $details = new \PayPal\Api\Details();
-    $amount = new \PayPal\Api\Amount();
-    $trans = new \PayPal\Api\Transaction();
-    $payment = new \PayPal\Api\Payment();
-    $redirect = new \PayPal\Api\RedirectUrls();
-
-    $payer->setPaymentMethod('paypal');
-    $details->setShipping('2.00')
-        ->setTax('0.00')
-        ->setSubtotal('120.00');
-    $amount->setCurrency('MYR')
-        ->setTotal('122.00')
-        ->setDetails($details);
-    $trans->setAmount($amount)
-        ->setDescription('Membership');
-    $payment->setIntent('sale')
-        ->setPayer($payer)
-        ->setTransactions([$trans]);
-    $redirect->setReturnUrl('http://175.138.78.105/midp/paymentToken.php?approve=yes')
-        ->setCancelUrl('http://175.138.78.105/midp/paymentToken.php?approve=no');
-    $payment->setRedirectUrls($redirect);
-
-    try{
-        $new = $_SESSION['email'];
-        $payment->create($api);
-        $pid = $payment->getId();
-        $hash = md5($pid);
-        $_SESSION['hash'] = $hash;
-        $_SESSION['pid'] = $pid;
-        //$update = mysqli_query($dbconfig,"update premium set pid='$pid',hash='$hash' where email = '$new' ");
-    }catch(\PayPal\Exception\PayPalConnectionException $e){
-        echo 'ERROR---->\n';
-        echo $e;
-    }
-    foreach ($payment->getLinks() as $l){
-        if($l->getRel()=="approval_url"){
-            $redirect = $l->getHref();
+    $check = mysqli_query($dbconfig,"select * from bank where name='$name' and num='$receipt'");
+    if(mysqli_num_rows($check)> 0){
+        $update = mysqli_query($dbconfig,"update premium set status_p='1' where email = '$n'");
+        if($update){
+            echo '<script>alert("Congratulations! Record found. Redirecting to home page");
+                      window.location.href="home.php";
+              </script>';
+        }else{
+            $check_re = "Something went wrong. Please try again. Thank you";
         }
-        header('location:'.$redirect);
+    }else{
+        $req = mysqli_query($dbconfig,"insert into bank (id,name,num,email,validate) VALUES (NULL,'$name','$receipt','$n','0')");
+        if($req){
+            $check_re="No record found but a request has been sent to the admin. Please wait until the admin verifies. Thank you";
+        }
     }
 }
 ?>
@@ -71,6 +56,7 @@ if(isset($_POST['submit'])){
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/midp.ico" rel="shortcut icon" type="image/x-icon" />
     <title>Midp Test</title>
 
     <script type="text/javascript">
@@ -102,10 +88,19 @@ if(isset($_POST['submit'])){
                     <?php echo $policy;?>
                     </p>
                 </div>
-            <!---code here-->
-                <h4 style="color: coral">Registration fee</h4><h2 style="color: #326eaf">RM 122.00 only</h2>
+                <h2 style="color: #326eaf">Bank name & receipt</h2>
                 <form action="payment.php" method="post">
-                    <input type="submit" class="btn btn-primary" name="submit" id="submit" value="Pay with Paypal"/>
+                    <div class="form-group">
+                        <input type="email" pattern=".{8,40}" required title="3 to 40 characters" name="email" id="email" class="form-control" required="required" placeholder="Email address">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" pattern=".{3,40}" required title="3 to 40 characters" name="bank_name" id="bank_name" class="form-control" required="required" placeholder="Name of Bank">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" pattern=".{3,40}" required title="3 to 40 characters" name="bank_receipt" id="bank_receipt" class="form-control" required="required" placeholder="Receipt Number">
+                    </div>
+                    <p style="color: coral"><?php echo $check_re;?></p>
+                    <input type="submit" class="btn btn-primary" name="submit" id="submit" value="<?php echo $button;?>"/>
                 </form>
             </div>
         </div>

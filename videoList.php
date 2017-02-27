@@ -53,6 +53,7 @@ $date = $res_sql['date'];
 $marks = $res_sql['mcq'];
 $theory = $res_sql['theory'];
 $grade = $res_sql['grade'];
+
 $grade_marks = (int)$marks+(int)$theory;
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
