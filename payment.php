@@ -8,9 +8,9 @@
 include ('DBHandler/config.php');
 session_start();
 $email = $_GET['email'];
-//if($email == ""){
-//    header('location:index.php');
-//}
+if($email == ""){
+    header('location:index.php');
+}
 $_SESSION['email'] = $email;
 
 $validate = mysqli_query($dbconfig,"select * from bank where email = '$email'");
@@ -21,6 +21,7 @@ if($confirm == "0"){
     header('location:request.php?email='.$email);
 }
 if($confirm == "1"){
+    mysqli_query($dbconfig,"update premium set status_p='$res' where email = '$email'");
     header('location:index.php');
 }
 

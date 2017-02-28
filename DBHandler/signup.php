@@ -39,7 +39,7 @@ if(isset($_POST["submit"])){
 
     try{
         $query = mysqli_query($dbconfig,"INSERT INTO premium (id,fullname,ic,mobile,email,pass,state,school,status_p) 
-                                             VALUES (NULL ,'$name','$ic','$mobile','$email','$password','$state','$school',NULL)");
+                                             VALUES (NULL ,'$name','$ic','$mobile','$email','$password','$state','$school','0')");
 
         if($query){
             header('location:../payment.php?email='.$email);
