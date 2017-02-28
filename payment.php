@@ -20,6 +20,9 @@ $confirm = $v['validate'];
 if($confirm == "0"){
     header('location:request.php?email='.$email);
 }
+if($confirm == "1"){
+    header('location:index.php');
+}
 
 $query = mysqli_query($dbconfig,"select * from policy where name = 'policy'");
 if(mysqli_num_rows($query)>0){
