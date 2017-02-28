@@ -21,8 +21,11 @@ if($confirm == "0"){
     header('location:request.php?email='.$email);
 }
 if($confirm == "1"){
-    mysqli_query($dbconfig,"update premium set status_p='$res' where email = '$email'");
-    header('location:index.php');
+    $done = mysqli_query($dbconfig,"update premium set status_p='1' where email = '$email'");
+    if($done){
+        $_SESSION['email'] = $email;
+        header('location:home.php');
+    }
 }
 
 $query = mysqli_query($dbconfig,"select * from policy where name = 'policy'");
@@ -50,6 +53,9 @@ if(isset($_POST['submit'])){
     }else{
         $req = mysqli_query($dbconfig,"insert into bank (id,name,num,email,validate) VALUES (NULL,'$name','$receipt','$n','0')");
         if($req){
+            echo '<script>alert("No record found but a request has been sent to the admin. Please wait until the admin verifies. Thank you. Redirecting to login page");
+                      window.location.href="index.php";
+              </script>';
             $check_re="No record found but a request has been sent to the admin. Please wait until the admin verifies. Thank you";
         }
     }

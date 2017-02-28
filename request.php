@@ -7,12 +7,14 @@
  */
 include "DBHandler/config.php";
 $email = $_GET['email'];
-
+if(empty($email)){
+    header('location:index.php');
+}
 $display = "";
 $check = mysqli_query($dbconfig,"select * from chat where who='$email' or receive='$email'");
 
-$fromAdmin = mysqli_query($dbconfig,"select * from chat where who='admin' and receive='$email' ORDER BY date");
-$fromUser = mysqli_query($dbconfig,"select * from chat where who='$email' and receive='admin' ORDER BY date");
+$fromAdmin = mysqli_query($dbconfig,"select * from chat where who='admin' and receive='$email' ORDER BY date ASC ");
+$fromUser = mysqli_query($dbconfig,"select * from chat where who='$email' and receive='admin' ORDER BY date ASC ");
 
 if(mysqli_num_rows($check) == 0){
     $display = "display:none";
